@@ -72,11 +72,8 @@ var swiper = new Swiper(".mySwiper", {
     clickable: true,
   },
   loop: true,
-  // 監聽 slide 切換事件
   on: {
     init: function () {
-        // 初始化時更新第一次
-        // Loop 模式下，swiper.slides[this.activeIndex] 可能不是第一個 DOM，需要小心
         const activeSlide = this.slides[this.activeIndex];
         updateHeroContent(activeSlide);
     },
@@ -87,12 +84,10 @@ var swiper = new Swiper(".mySwiper", {
   }
 });
 
-// 3. Modal Logic (詳細資訊彈窗) - 保持不變
 const modal = document.getElementById("movie-modal");
 const closeModalBtn = document.querySelector(".close-modal");
 const movieCards = document.querySelectorAll(".movie-card");
 
-// Modal 元素
 const mTitle = document.getElementById("m-title");
 const mYear = document.getElementById("m-year");
 const mGenres = document.getElementById("m-genres");
@@ -102,10 +97,8 @@ const mStars = document.getElementById("m-stars");
 const mDesc = document.getElementById("m-desc");
 const mPoster = document.getElementById("m-poster");
 
-// 為每個卡片添加點擊事件
 movieCards.forEach(card => {
     card.addEventListener("click", function() {
-        // 從 data attributes 讀取資料
         const title = this.getAttribute("data-title");
         const year = this.getAttribute("data-year");
         const rating = this.getAttribute("data-rating");
@@ -115,7 +108,6 @@ movieCards.forEach(card => {
         const desc = this.getAttribute("data-desc");
         const poster = this.getAttribute("data-poster");
 
-        // 填入 Modal
         mTitle.innerText = title;
         mYear.innerText = year;
         mRating.innerText = rating;
@@ -125,12 +117,10 @@ movieCards.forEach(card => {
         mDesc.innerText = desc;
         mPoster.src = poster;
 
-        // 顯示 Modal
         modal.style.display = "block";
     });
 });
 
-// 處理 Watch Trailer 按鈕 (阻止冒泡)
 const trailerLinks = document.querySelectorAll(".trailer-link");
 trailerLinks.forEach(link => {
     link.addEventListener("click", (e) => {
@@ -138,18 +128,14 @@ trailerLinks.forEach(link => {
     });
 });
 
-// 關閉 Modal
 if (closeModalBtn) {
     closeModalBtn.addEventListener("click", () => {
         modal.style.display = "none";
     });
 }
 
-// 點擊 Modal 外部也可關閉
 window.addEventListener("click", (e) => {
     if (e.target == modal) {
         modal.style.display = "none";
     }
 });
-
-// 移除舊的 Search Button listener，因為現在改用 Form submit

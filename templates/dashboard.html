@@ -39,7 +39,6 @@
     </footer>
 
     <script>
-        // 接收 Flask 傳來的資料
         const labels = {{ labels | tojson }};
         const data = {{ values | tojson }};
 
@@ -51,10 +50,10 @@
                 datasets: [{
                     label: 'Number of Movies',
                     data: data,
-                    backgroundColor: 'rgba(245, 197, 24, 0.6)', // IMDb Yellow 半透明
-                    borderColor: 'rgba(245, 197, 24, 1)',     // IMDb Yellow 實色
+                    backgroundColor: 'rgba(245, 197, 24, 0.6)', 
+                    borderColor: 'rgba(245, 197, 24, 1)',     
                     borderWidth: 1,
-                    borderRadius: 5, // 圓角柱狀圖
+                    borderRadius: 5, 
                 }]
             },
             options: {
@@ -64,10 +63,10 @@
                     y: {
                         beginAtZero: true,
                         grid: {
-                            color: 'rgba(255, 255, 255, 0.1)' // 網格線改為淡白
+                            color: 'rgba(255, 255, 255, 0.1)' 
                         },
                         ticks: {
-                            color: '#ccc' // 文字顏色
+                            color: '#ccc' 
                         }
                     },
                     x: {
