@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMDb Movie Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <a href="{{ url_for('index') }}" style="text-decoration: none; display: flex; align-items: center; color: white;">
+                <i class="fa-solid fa-arrow-left" style="font-size: 1.5rem; margin-right: 10px;"></i>
+                <h2 style="color: #f5c518; margin: 0;">Back to Home</h2>
+            </a>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="chart-wrapper">
+            <h1 class="chart-title">Top 250 Movies by Release Year (每五年)</h1>
+            <div class="canvas-box">
+                <canvas id="yearChart"></canvas>
+            </div>
+            <p class="chart-desc">
+                This chart visualizes the distribution of the IMDb Top 250 movies over time. 
+                Grouped into 5-year periods to highlight the "Golden Ages" of cinema.
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="copyright">
+            &copy; 2025 IMDb Scraper Project. Dashboard Analytics.
+        </div>
+    </footer>
+
+    <script>
+        // 接收 Flask 傳來的資料
+        const labels = {{ labels | tojson }};
+        const data = {{ values | tojson }};
+
+        const ctx = document.getElementById('yearChart').getContext('2d');
+        const yearChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Number of Movies',
+                    data: data,
+                    backgroundColor: 'rgba(245, 197, 24, 0.6)', // IMDb Yellow 半透明
+                    borderColor: 'rgba(245, 197, 24, 1)',     // IMDb Yellow 實色
+                    borderWidth: 1,
+                    borderRadius: 5, // 圓角柱狀圖
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)' // 網格線改為淡白
+                        },
+                        ticks: {
+                            color: '#ccc' // 文字顏色
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#ccc'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

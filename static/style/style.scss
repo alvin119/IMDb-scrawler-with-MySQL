@@ -1,0 +1,630 @@
+$TheShawshankRedemption: url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.primevideo.com%2F-%2Fzh_TW%2Fdetail%2FThe-Shawshank-Redemption%2F0H3BD1NXV10WDK34UPWWVK4NNS&psig=AOvVaw0MDhQr3uo_fSVvzh-jukTD&ust=1712757405901000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMig-9ektYUDFQAAAAAdAAAAABAI");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgba($color: #000000, $alpha: 0.9);
+  font-family: sans-serif;
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+
+    div.container {
+      width: 100%;
+      min-height: 10vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+      
+      gap: 15px;
+      .search-bar {
+        width: 100%;
+        max-width: 800px; // 加寬一點
+        height: 60px;
+        display: flex;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 60px;
+        padding-right: 10px; // 修正 button 位置
+
+        .input-group {
+            flex: 9;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            
+            input {
+                flex: 2; // input 佔多一點
+                background: transparent;
+                border: 0;
+                outline: none;
+                color: white;
+                font-size: 1.25rem;
+                padding: 0 20px 0 30px;
+            }
+            
+            // 新增：下拉選單樣式
+            select {
+                flex: 1;
+                background: transparent; // #333;
+                border: none;
+                border-left: 1px solid #555;
+                color: #ccc;
+                font-size: 1rem;
+                padding: 0 15px;
+                outline: none;
+                cursor: pointer;
+                
+                option {
+                    background-color: #000;
+                    color: white;
+                }
+            }
+        }
+
+        button {
+          flex: 0 0 50px;
+          background: transparent;
+          border: 0;
+          color: white;
+          cursor: pointer;
+          i {
+            transform: scale(1.5);
+          }
+        }
+      }
+      .dashboard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: #333;
+            color: #f5c518;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            
+            &:hover {
+                background-color: #f5c518;
+                color: black;
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    &.scrolled {
+      background-color: #141414;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  // --- 改進後的 Hero Section ---
+  .hero-section {
+    width: 100%;
+    padding: 3rem 5%;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.9));
+
+    .hero-content {
+        display: flex;
+        flex-wrap: wrap; // 手機版自動換行
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        gap: 50px;
+
+        // 左側文字區
+        .hero-info {
+            flex: 1 1 400px; // 彈性寬度
+            color: white;
+            padding: 20px;
+            
+            .highlight-tag {
+                background-color: #f5c518;
+                color: black;
+                padding: 5px 10px;
+                font-weight: bold;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+
+            h1 {
+                font-size: 3.5rem;
+                margin: 20px 0 10px 0;
+                line-height: 1.1;
+                text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            }
+
+            .hero-meta {
+                font-size: 1.2rem;
+                color: #ccc;
+                margin-bottom: 20px;
+                i { color: gold; margin-right: 5px;}
+            }
+
+            p {
+                font-size: 1rem;
+                line-height: 1.6;
+                color: #e0e0e0;
+                margin-bottom: 30px;
+                max-width: 500px;
+            }
+
+            .hero-btn {
+                display: inline-block;
+                padding: 12px 30px;
+                background-color: #f5c518;
+                color: black;
+                text-decoration: none;
+                font-weight: bold;
+                border-radius: 30px;
+                transition: transform 0.3s, box-shadow 0.3s;
+                
+                &:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 5px 15px rgba(245, 197, 24, 0.4);
+                }
+                
+                i { margin-right: 8px; }
+            }
+        }
+
+        // 右側 Swiper 區
+        .swiper {
+            flex: 1 1 400px;
+            width: 100%;
+            height: 450px; // 稍微加高
+
+            .swiper-slide {
+                width: 300px; // 固定寬度讓 coverflow 效果更好
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 15px;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+                }
+            }
+        }
+    }
+  }
+
+  main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 3rem;
+
+    div.movie-card {
+      flex: 0 1 350px;
+      width: 375px;
+      padding: 20px;
+      transition: all 0.5s ease;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.8));
+      }
+
+      .img-container {
+        height: 350px;
+        width: 100%;
+        overflow: hidden;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      div.content {
+        background-color: white;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        padding: 1rem;
+
+        .name .score {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          h3 {
+            margin-right: 10px;
+            font-size: 1.1rem; // 微調字體
+          }
+          ul {
+            list-style: none;
+            display: flex;
+          }
+        }
+
+        .details {
+          display: flex;
+          justify-content: space-between;
+          padding-top: 10px;
+          .length {
+            text-align: center;
+          }
+          .gray-color {
+            color: gray;
+            font-size: 0.8rem;
+          }
+        }
+
+        div#bnt {
+          padding-top: 1rem;
+          button {
+            position: relative;
+            height: 40px;
+            width: 200px;
+            border: 0;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            span.circle {
+              width: 40px;
+              height: 40px;
+              background-color: #282936;
+              border-radius: 20px;
+              transition: width 0.5s;
+              position: absolute;
+              left: 0;
+            }
+            i {
+              color: white;
+              z-index: 2;
+              margin-left: 12px;
+            }
+            p {
+              width: 200px;
+              text-align: left;
+              position: absolute;
+              margin: 0 0 0 4rem;
+              font-size: 1.2rem;
+              transition: all 1.5s ease;
+            }
+            &:hover {
+              p {
+                color: white;
+              }
+              span.circle {
+                cursor: pointer;
+                width: 190px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // --- Modal CSS (保留) ---
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+
+    .modal-content {
+      background-color: #1a1a1a;
+      margin: 5% auto;
+      padding: 0;
+      border: 1px solid #333;
+      width: 80%;
+      max-width: 900px;
+      border-radius: 15px;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+      animation: modalFadeIn 0.4s;
+      color: white;
+
+      .close-modal {
+        color: #aaa;
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 10;
+        &:hover {
+          color: white;
+        }
+      }
+
+      .modal-body {
+        display: flex;
+        flex-wrap: wrap;
+
+        .modal-img {
+          flex: 1 1 300px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            min-height: 500px;
+          }
+        }
+
+        .modal-info {
+          flex: 2 1 400px;
+          padding: 40px;
+
+          h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #f5c518; 
+          }
+
+          .m-meta {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 20px;
+          }
+
+          hr {
+            border-color: #333;
+            margin: 20px 0;
+          }
+
+          .m-desc-label {
+            color: #f5c518;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+          }
+
+          .m-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #e0e0e0;
+          }
+
+          .m-desc-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ddd;
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // footer {
+  //   background-color: #000;
+  //   color: white;
+  //   padding: 40px 20px;
+  //   margin-top: 50px;
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+
+  //   .footer-content {
+  //     display: flex;
+  //     gap: 50px;
+  //     margin-bottom: 20px;
+
+  //     div {
+  //       h4 {
+  //         margin-bottom: 15px;
+  //         color: rgb(245, 197, 24);
+  //       }
+  //       ul {
+  //         list-style: none;
+  //         li {
+  //           margin-bottom: 8px;
+  //           cursor: pointer;
+  //           &:hover {
+  //             color: #ccc;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   .copyright {
+  //     font-size: 0.8rem;
+  //     color: #666;
+  //     border-top: 1px solid #333;
+  //     width: 100%;
+  //     text-align: center;
+  //     padding-top: 20px;
+  //   }
+  // }
+  footer.imdb-footer {
+    background-color: #000;
+    color: white;
+    padding: 3rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 50px;
+    border-top: 1px solid #333;
+
+    // 1. 按鈕區
+    .footer-signin-section {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .imdb-btn {
+            background-color: #f5c518; // IMDb 黃色
+            color: black;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s;
+
+            &:hover {
+                background-color: darken(#f5c518, 10%);
+            }
+        }
+
+        .imdb-outline-btn {
+            background-color: transparent;
+            color: #f5c518;
+            border: 1px solid #f5c518;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s;
+
+            &:hover {
+                background-color: rgba(245, 197, 24, 0.1);
+            }
+        }
+    }
+
+    // 2. 社群圖示區
+    .footer-socials {
+        display: flex;
+        gap: 2rem;
+        
+        a {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s, color 0.3s;
+
+            &:hover {
+                color: #f5c518;
+                transform: scale(1.2);
+            }
+        }
+    }
+
+    // 3. 連結列表區
+    .footer-links {
+        list-style: none;
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+
+        li {
+            a {
+                color: white;
+                text-decoration: none;
+                font-weight: bold;
+                font-size: 0.95rem;
+                position: relative;
+
+                &:hover {
+                    text-decoration: underline;
+                    color: #f5c518;
+                }
+                
+                // 外部連結圖示效果
+                i {
+                    margin-left: 5px;
+                    font-size: 0.8rem;
+                }
+            }
+        }
+    }
+
+    // 4. Logo 區
+    .footer-logo {
+        text-align: center;
+        margin-top: 1rem;
+        
+        svg {
+            color: white;
+        }
+    }
+
+    // 5. 版權區
+    .footer-copyright {
+        font-size: 0.8rem;
+        color: #666;
+        text-align: center;
+        margin-top: 10px;
+    }
+  }
+}
+
+// --- Dashboard Page Styles ---
+main.dashboard-container {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+
+    .chart-wrapper {
+        width: 100%;
+        max-width: 1000px; // 限制最大寬度，避免在大螢幕太寬
+        background-color: #1a1a1a;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        border: 1px solid #333;
+
+        .chart-title {
+            color: #f5c518;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .canvas-box {
+            position: relative;
+            height: 500px; // 設定圖表高度
+            width: 100%;
+        }
+
+        .chart-desc {
+            color: #aaa;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+    }
+}

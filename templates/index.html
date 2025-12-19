@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMDb Top Movies</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}" />
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <form action="/" method="get" class="search-bar">
+                <div class="input-group">
+                    <input type="text" name="q" placeholder="Search movies..." value="{{ search_query }}" />
+                    <select name="sort" onchange="this.form.submit()">
+                        <option value="rank" {% if current_sort == 'rank' %}selected{% endif %}>Top Rank</option>
+                        <option value="rating_desc" {% if current_sort == 'rating_desc' %}selected{% endif %}>Highest Rated</option>
+                        <option value="year_desc" {% if current_sort == 'year_desc' %}selected{% endif %}>Newest Year</option>
+                        <option value="year_asc" {% if current_sort == 'year_asc' %}selected{% endif %}>Oldest Year</option>
+                    </select>
+                </div>
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <a href="{{ url_for('dashboard') }}" class="dashboard-btn" title="View Analytics">
+                <i class="fa-solid fa-chart-simple"></i>
+            </a>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-info">
+                <span class="highlight-tag">FEATURED MOVIE</span>
+                <h1 id="hero-title">Loading...</h1>
+                <div class="hero-meta">
+                    <span id="hero-year"></span>
+                    <span id="hero-rating"><i class="fa-solid fa-star"></i> </span>
+                </div>
+                <p id="hero-desc">Select a movie to see details.</p>
+                <a id="hero-trailer-btn" href="#" target="_blank" class="hero-btn">
+                    <i class="fa-solid fa-play"></i> Watch Trailer
+                </a>
+            </div>
+
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    {% for movie in swiper_movies %}
+                    <div class="swiper-slide" 
+                         data-title="{{ movie.title }}"
+                         data-year="{{ movie.year }}"
+                         data-rating="{{ movie.rating }}"
+                         data-desc="{{ movie.details.description[:150] + '...' if movie.details else 'No description available.' }}"
+                         data-trailer="{{ movie.trailer_url }}">
+                        <img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        {% if movies|length == 0 %}
+            <div style="color: white; text-align: center; width: 100%; padding: 50px;">
+                <h2>No movies found matching your search.</h2>
+            </div>
+        {% endif %}
+
+        {% for movie in movies %}
+        <div class="movie-card" 
+             data-title="{{ movie.title }}"
+             data-year="{{ movie.year }}"
+             data-rating="{{ movie.rating }}"
+             data-desc="{{ movie.details.description if movie.details else 'No description' }}"
+             data-director="{{ movie.details.director if movie.details else 'Unknown' }}"
+             data-stars="{{ movie.details.stars if movie.details else 'Unknown' }}"
+             data-genres="{{ movie.details.genres if movie.details else 'Unknown' }}"
+             data-poster="{{ movie.poster_url }}">
+            
+            <div class="img-container">
+                <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" loading="lazy">
+            </div>
+            
+            <div class="content">
+                <div class="name">
+                    <div class="score">
+                        <h3>{{ movie.title }}</h3>
+                        <ul>
+                            <li style="color: rgb(245, 197, 24)">{{ movie.rating }}</li>
+                            <li>/10</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="details">
+                    <div class="date">
+                        <div class="gray-color length">Year</div>
+                        <div class="length">{{ movie.year }}</div>
+                    </div>
+                    <div class="running-time">
+                        <div class="gray-color length">Length</div>
+                        <div class="length">{{ movie.duration }}</div>
+                    </div>
+                    <div class="lang">
+                        <div class="gray-color length">Rank</div>
+                        <div class="length">#{{ movie.rank_num }}</div>
+                    </div>
+                </div>
+                
+                <div id="bnt">
+                    {% if movie.trailer_url %}
+                    <a href="{{ movie.trailer_url }}" target="_blank" class="trailer-link">
+                        <button class="bnt">
+                            <span class="circle"></span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                            <p>watch trailer</p>
+                        </button>
+                    </a>
+                    {% else %}
+                    <button class="bnt" style="opacity: 0.5; cursor: not-allowed;">
+                        <span class="circle"></span>
+                        <i class="fa-solid fa-ban"></i>
+                        <p>No Trailer</p>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </main>
+
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <div class="modal-img">
+                    <img id="m-poster" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <h2 id="m-title">Title</h2>
+                    <div class="m-meta">
+                        <span id="m-year"></span> | <span id="m-genres"></span> | <i class="fa-solid fa-star" style="color:gold;"></i> <span id="m-rating"></span>
+                    </div>
+                    <hr>
+                    <p class="m-desc-label">Director</p>
+                    <p id="m-director" class="m-text"></p>
+                    
+                    <p class="m-desc-label">Stars</p>
+                    <p id="m-stars" class="m-text"></p>
+                    
+                    <p class="m-desc-label">Plot</p>
+                    <p id="m-desc" class="m-desc-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="imdb-footer">
+        <div class="footer-signin-section">
+            <a href="#" class="imdb-btn">Get the IMDb App</a>
+            <a href="#" class="imdb-outline-btn">Follow IMDb on social</a>
+        </div>
+
+        <div class="footer-socials">
+            <a href="https://www.tiktok.com/@imdb" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://instagram.com/imdb" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://twitter.com/imdb" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://youtube.com/imdb/" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://facebook.com/imdb" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+
+        <ul class="footer-links">
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Site Index</a></li>
+            <li><a href="#">IMDbPro</a></li>
+            <li><a href="#">Box Office Mojo</a></li>
+            <li><a href="#">License IMDb Data</a></li>
+        </ul>
+
+        <ul class="footer-links">
+            <li><a href="#">Press Room</a></li>
+            <li><a href="#">Advertising</a></li>
+            <li><a href="#">Jobs</a></li>
+            <li><a href="#">Conditions of Use</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Your Ads Privacy Choices</a></li>
+        </ul>
+
+        <div class="footer-logo">
+            <div style="margin-top: 10px; font-weight: bold; font-size: 1.2rem; letter-spacing: 1px;">
+                <span style="background: #f5c518; color: black; padding: 2px 5px; border-radius: 3px;">IMDb</span> Scraper
+            </div>
+        </div>
+
+        <div class="footer-copyright">
+            <p>沒有版權</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
