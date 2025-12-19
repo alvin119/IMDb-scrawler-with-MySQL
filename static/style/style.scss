@@ -5,7 +5,6 @@ $TheShawshankRedemption: url("https://www.google.com/url?sa=i&url=https%3A%2F%2F
   margin: 0;
   box-sizing: border-box;
 }
-
 body {
   background-color: rgba($color: #000000, $alpha: 0.9);
   font-family: sans-serif;
@@ -108,7 +107,6 @@ body {
     }
   }
 
-  // --- 改進後的 Hero Section ---
   .hero-section {
     width: 100%;
     padding: 3rem 5%;
@@ -118,13 +116,12 @@ body {
 
     .hero-content {
         display: flex;
-        flex-wrap: wrap; // 手機版自動換行
+        flex-wrap: wrap; 
         align-items: center;
         width: 100%;
         max-width: 1200px;
         gap: 50px;
 
-        // 左側文字區
         .hero-info {
             flex: 1 1 400px; // 彈性寬度
             color: white;
@@ -181,14 +178,13 @@ body {
             }
         }
 
-        // 右側 Swiper 區
         .swiper {
             flex: 1 1 400px;
             width: 100%;
-            height: 450px; // 稍微加高
+            height: 450px; 
 
             .swiper-slide {
-                width: 300px; // 固定寬度讓 coverflow 效果更好
+                width: 300px; 
                 height: 100%;
                 display: flex;
                 justify-content: center;
@@ -250,7 +246,7 @@ body {
           align-items: center;
           h3 {
             margin-right: 10px;
-            font-size: 1.1rem; // 微調字體
+            font-size: 1.1rem; 
           }
           ul {
             list-style: none;
@@ -320,7 +316,6 @@ body {
     }
   }
 
-  // --- Modal CSS (保留) ---
   .modal {
     display: none;
     position: fixed;
@@ -433,46 +428,7 @@ body {
     }
   }
 
-  // footer {
-  //   background-color: #000;
-  //   color: white;
-  //   padding: 40px 20px;
-  //   margin-top: 50px;
-  //   display: flex;
-  //   flex-direction: column;
-  //   align-items: center;
 
-  //   .footer-content {
-  //     display: flex;
-  //     gap: 50px;
-  //     margin-bottom: 20px;
-
-  //     div {
-  //       h4 {
-  //         margin-bottom: 15px;
-  //         color: rgb(245, 197, 24);
-  //       }
-  //       ul {
-  //         list-style: none;
-  //         li {
-  //           margin-bottom: 8px;
-  //           cursor: pointer;
-  //           &:hover {
-  //             color: #ccc;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   .copyright {
-  //     font-size: 0.8rem;
-  //     color: #666;
-  //     border-top: 1px solid #333;
-  //     width: 100%;
-  //     text-align: center;
-  //     padding-top: 20px;
-  //   }
-  // }
   footer.imdb-footer {
     background-color: #000;
     color: white;
@@ -521,7 +477,6 @@ body {
         }
     }
 
-    // 2. 社群圖示區
     .footer-socials {
         display: flex;
         gap: 2rem;
@@ -538,7 +493,6 @@ body {
         }
     }
 
-    // 3. 連結列表區
     .footer-links {
         list-style: none;
         display: flex;
@@ -560,7 +514,6 @@ body {
                     color: #f5c518;
                 }
                 
-                // 外部連結圖示效果
                 i {
                     margin-left: 5px;
                     font-size: 0.8rem;
@@ -569,7 +522,6 @@ body {
         }
     }
 
-    // 4. Logo 區
     .footer-logo {
         text-align: center;
         margin-top: 1rem;
@@ -579,7 +531,6 @@ body {
         }
     }
 
-    // 5. 版權區
     .footer-copyright {
         font-size: 0.8rem;
         color: #666;
@@ -589,7 +540,6 @@ body {
   }
 }
 
-// --- Dashboard Page Styles ---
 main.dashboard-container {
     min-height: 80vh;
     display: flex;
@@ -599,7 +549,7 @@ main.dashboard-container {
 
     .chart-wrapper {
         width: 100%;
-        max-width: 1000px; // 限制最大寬度，避免在大螢幕太寬
+        max-width: 1000px; 
         background-color: #1a1a1a;
         padding: 30px;
         border-radius: 15px;
@@ -615,7 +565,7 @@ main.dashboard-container {
 
         .canvas-box {
             position: relative;
-            height: 500px; // 設定圖表高度
+            height: 500px; 
             width: 100%;
         }
 
