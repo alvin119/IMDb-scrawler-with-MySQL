@@ -4,7 +4,7 @@ IMDb (Internet Movie Database) 是個知名的電影網站，專門提供權威�
 
 剛好以前在大一基於自己興趣有做過 IMDb 的網頁專案，當時單純使用 html、css、js 做出簡單的靜態網頁，這學期希望藉由資料庫這堂課的機會，能完善以前的專案，修改原本網頁，加上爬蟲以及資料庫系統，打造更接近現實生活中的電影網站。
 
-
+hackmd 連結 : https://hackmd.io/@M0Dqhe_USy-OrY2pBhL65g/Hy5ua1QXZg
 
 ## 2、3. 功能說明與成品功能描述
 本專案在開發一個**整合爬蟲技術、Flask、mySQL**的電影資訊平台。
