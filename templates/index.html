@@ -17,7 +17,6 @@
                     <input type="text" name="q" placeholder="Search movies..." value="{{ search_query }}" />
                     <select name="sort" onchange="this.form.submit()">
                         <option value="rank" {% if current_sort == 'rank' %}selected{% endif %}>Top Rank</option>
-                        <option value="rating_desc" {% if current_sort == 'rating_desc' %}selected{% endif %}>Highest Rated</option>
                         <option value="year_desc" {% if current_sort == 'year_desc' %}selected{% endif %}>Newest Year</option>
                         <option value="year_asc" {% if current_sort == 'year_asc' %}selected{% endif %}>Oldest Year</option>
                     </select>

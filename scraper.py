@@ -22,10 +22,10 @@ def scrape_movie_details(session, detail_url):
             return None
             
         soup = BeautifulSoup(res.text, 'html.parser')
-
+        # 海報
         meta_img = soup.find("meta", property="og:image")
         poster = meta_img["content"] if meta_img else ""
-
+        # trailer
         trailer_url = ""
         all_links = soup.find_all('a', href=True)
         for link in all_links:
@@ -39,17 +39,18 @@ def scrape_movie_details(session, detail_url):
              play_btn = soup.select_one('a[aria-label*="trailer"]')
              if play_btn and play_btn.get('href'):
                  trailer_url = f"https://www.imdb.com{play_btn['href']}"
-
+        # 簡介
         desc_tag = soup.select_one('[data-testid="plot"]')
         description = desc_tag.text.strip() if desc_tag else "No description available."
-
+        # 導演
         director_item = soup.select_one('li[data-testid="title-pc-principal-credit"] a')
         director = director_item.text.strip() if director_item else ""
-        
+        # 演員
         stars_tags = soup.select('a[data-testid="title-cast-item__actor"]')
         stars = ", ".join([s.text.strip() for s in stars_tags[:3]])
         
-        genres_tags = soup.select('[data-testid="genres"] a')
+        # 類型
+        genres_tags = soup.select('div[class="ipc-chip-list__scroller"] a')
         genres = ", ".join([g.text.strip() for g in genres_tags])
 
         return {
@@ -101,32 +102,36 @@ def scrape_imdb():
         for item in movie_items:
             
             try:
+                # 名字
                 title_tag = item.select_one('h3.ipc-title__text')
                 full_title_text = title_tag.text.strip() if title_tag else "Unknown"
                 
                 rank_num = 0
                 title_text = full_title_text
+                # 排名
+                # 1. The Shawshank Redemption
                 if '. ' in full_title_text:
-                    rank_str, title_text = full_title_text.split('. ', 1)
+                    rank_str, title_text = full_title_text.split('. ', 1) # 分割成排名和標題
                     rank_num = int(rank_str)
                 else:
                     rank_tag = item.select_one('.ipc-signpost__text')
                     if rank_tag:
                          rank_num = int(rank_tag.text.replace('#', '').strip())
-
+                # 詳細頁面連結
                 link_tag = item.select_one('a.ipc-title-link-wrapper')
                 detail_url = "https://www.imdb.com" + link_tag['href'] if link_tag else ""
-
+                # 年份跟時長
                 metadata_items = item.select('span.cli-title-metadata-item')
                 year = metadata_items[0].text.strip() if len(metadata_items) > 0 else ""
                 duration = metadata_items[1].text.strip() if len(metadata_items) > 1 else ""
-                
+                # 評分
                 rating_tag = item.select_one('span.ipc-rating-star--rating')
                 rating_score = rating_tag.text.strip() if rating_tag else "0.0"
-
+                # 暫時抓列表頁的海報，很模糊
                 img_tag = item.select_one('img.ipc-image')
                 temp_poster = img_tag.get('src', '') if img_tag else ""
 
+                # 開始爬取 details
                 details_data = scrape_movie_details(session, detail_url)
                 
                 final_poster = details_data['poster'] if (details_data and details_data['poster']) else temp_poster
