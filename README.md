@@ -20,16 +20,15 @@ hackmd 連結 : https://hackmd.io/@M0Dqhe_USy-OrY2pBhL65g/Hy5ua1QXZg
 
 ### Frontend 跟 UI
 前端分為5個部分:
-(1)	Navigation bar
+1. Navigation bar
 支援片名搜尋以及依「排名」、「評分 (高→低)」、「年份 (新→舊)」等條件篩選、排序。
-
-(2)	電影輪播:
+2. 電影輪播:
 使用 Swiper.js，輪流播放電影海報，隨圖片切換會更新對應的電影資訊
-(3)	電影卡片及詳細資訊
+3. 電影卡片及詳細資訊
 滑鼠放上去有放大特效，點擊卡片會出現彈窗，進一步顯示電影的詳細資料，另外有 watch trailer 按鈕可導向到 IMDb 的預告片網址
-(4)	Footer
+4. Footer
 模仿 IMDb 的 footer
-(5)	統計圖
+5. 統計圖
 使用 **Chart.js** 繪製長條圖，已「5年一個區間」進行統計，視覺化圖表
 
 ---
