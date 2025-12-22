@@ -23,9 +23,21 @@
                 </div>
                 <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
-            <a href="{{ url_for('dashboard') }}" class="dashboard-btn" title="View Analytics">
-                <i class="fa-solid fa-chart-simple"></i>
-            </a>
+            
+            <div style="display: flex; align-items: center; gap: 15px; margin-left: 20px;">
+                <a href="{{ url_for('dashboard') }}" class="dashboard-btn" title="View Analytics">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </a>
+                
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('favorites') }}" class="dashboard-btn" title="My Favorites" style="color: #ff4d4d;">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                    <a href="{{ url_for('logout') }}" style="color: #ccc; text-decoration: none; font-weight: bold; font-size: 0.9rem;">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" style="color: #f5c518; text-decoration: none; font-weight: bold;">Login</a>
+                {% endif %}
+            </div>
         </div>
     </header>
 
@@ -71,15 +83,33 @@
 
         {% for movie in movies %}
         <div class="movie-card" 
-             data-title="{{ movie.title }}"
-             data-year="{{ movie.year }}"
-             data-rating="{{ movie.rating }}"
-             data-desc="{{ movie.details.description if movie.details else 'No description' }}"
-             data-director="{{ movie.details.director if movie.details else 'Unknown' }}"
-             data-stars="{{ movie.details.stars if movie.details else 'Unknown' }}"
-             data-genres="{{ movie.details.genres if movie.details else 'Unknown' }}"
-             data-poster="{{ movie.poster_url }}">
+            data-title="{{ movie.title }}"
+            data-year="{{ movie.year }}"
+            data-rating="{{ movie.rating }}"
+            data-desc="{{ movie.details.description if movie.details else 'No description' }}"
+            data-director="{{ movie.details.director if movie.details else 'Unknown' }}"
+            data-stars="{{ movie.details.stars if movie.details else 'Unknown' }}"
+            data-genres="{{ movie.details.genres if movie.details else 'Unknown' }}"
+            data-poster="{{ movie.poster_url }}">
             
+            <div class="fav-icon">
+                {% if current_user.is_authenticated %}
+                    {% if movie in current_user.favorite_movies %}
+                        <a href="{{ url_for('remove_favorite', movie_id=movie.id) }}" title="Remove from favorites">
+                            <i class="fa-solid fa-heart" style="color: #ff4d4d;"></i>
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('add_favorite', movie_id=movie.id) }}" title="Add to favorites">
+                            <i class="fa-regular fa-heart" style="color: white;"></i>
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ url_for('login') }}">
+                        <i class="fa-regular fa-heart" style="color: white;"></i>
+                    </a>
+                {% endif %}
+            </div>
+
             <div class="img-container">
                 <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" loading="lazy">
             </div>

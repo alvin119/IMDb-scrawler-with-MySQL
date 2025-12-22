@@ -1,88 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IMDb Movie Dashboard</title>
+    <meta charset="UTF-8">
+    <title>Dashboard - IMDb Analytics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
-<body>
-    <header>
+<body class="dashboard-page">
+    
+    <header class="glass-header">
         <div class="container">
-            <a href="{{ url_for('index') }}" style="text-decoration: none; display: flex; align-items: center; color: white;">
-                <i class="fa-solid fa-arrow-left" style="font-size: 1.5rem; margin-right: 10px;"></i>
-                <h2 style="color: #f5c518; margin: 0;">Back to Home</h2>
+            <a href="{{ url_for('index') }}" class="back-home-btn">
+                <i class="fa-solid fa-chevron-left"></i> <span>Back to Home</span>
             </a>
+            <h2 style="color:#f5c518; margin:0;">IMDb Top 250 Analytics</h2>
         </div>
     </header>
 
-    <main class="dashboard-container">
-        <div class="chart-wrapper">
-            <h1 class="chart-title">Top 250 Movies by Release Year (每五年)</h1>
+    <div class="dashboard-container">
+        <div class="chart-card large">
+            <h3>Movies by Release Year</h3>
             <div class="canvas-box">
                 <canvas id="yearChart"></canvas>
             </div>
-            <p class="chart-desc">
-                This chart visualizes the distribution of the IMDb Top 250 movies over time. 
-                Grouped into 5-year periods to highlight the "Golden Ages" of cinema.
-            </p>
         </div>
-    </main>
 
-    <footer>
-        <div class="copyright">
-            &copy; 2025 IMDb Scraper Project. Dashboard Analytics.
+        <div class="chart-card">
+            <h3>Movies by Genre</h3>
+            <div class="canvas-box">
+                <canvas id="genreChart"></canvas>
+            </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        const labels = {{ labels | tojson }};
-        const data = {{ values | tojson }};
+        const yearLabels = {{ year_labels | tojson }};
+        const yearData = {{ year_values | tojson }};
 
-        const ctx = document.getElementById('yearChart').getContext('2d');
-        const yearChart = new Chart(ctx, {
+        const ctxYear = document.getElementById('yearChart').getContext('2d');
+        new Chart(ctxYear, {
             type: 'bar',
             data: {
-                labels: labels,
+                labels: yearLabels,
                 datasets: [{
-                    label: 'Number of Movies',
-                    data: data,
-                    backgroundColor: 'rgba(245, 197, 24, 0.6)', 
-                    borderColor: 'rgba(245, 197, 24, 1)',     
-                    borderWidth: 1,
-                    borderRadius: 5, 
+                    label: 'Movie Count',
+                    data: yearData,
+                    backgroundColor: '#f5c518',
+                    borderRadius: 4
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
                 scales: {
-                    y: {
+                    y: { 
                         beginAtZero: true,
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)' 
-                        },
-                        ticks: {
-                            color: '#ccc' 
-                        }
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#ccc' }
                     },
                     x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#ccc'
-                        }
+                        grid: { display: false },
+                        ticks: { color: '#ccc' }
                     }
-                },
+                }
+            }
+        });
+
+        // Pie Chart
+        const genreLabels = {{ genre_labels | tojson }};
+        const genreData = {{ genre_values | tojson }};
+
+        const ctxGenre = document.getElementById('genreChart').getContext('2d');
+        new Chart(ctxGenre, {
+            type: 'doughnut', 
+            data: {
+                labels: genreLabels,
+                datasets: [{
+                    data: genreData,
+                    backgroundColor: [
+                        '#f5c518', '#e5a00d', '#d48806', '#c36f00', 
+                        '#b05d00', '#ff6b6b', '#ff8787', '#ffa5a5', '#666'
+                    ],
+                    borderColor: '#1a1a1a', 
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        labels: {
-                            color: 'white'
-                        }
+                        position: 'right', 
+                        labels: { color: '#ccc', font: { size: 12 } }
                     }
                 }
             }

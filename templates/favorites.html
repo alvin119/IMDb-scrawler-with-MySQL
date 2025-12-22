@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Watchlist</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/style.css') }}"
+    />
+  </head>
+  <body class="favorites-page">
+    <header class="glass-header">
+      <div class="container">
+        <a href="{{ url_for('index') }}" class="back-home-btn">
+          <i class="fa-solid fa-chevron-left"></i> <span>Back to Home</span>
+        </a>
+
+        <div class="user-controls">
+          <span class="welcome-text"
+            >Hi, <strong>{{ current_user.username }}</strong></span
+          >
+          <span class="divider">|</span>
+          <a href="{{ url_for('logout') }}" class="logout-link">
+            Logout <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="favorites-hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="avatar-circle">
+          <i class="fa-solid fa-user-astronaut"></i>
+        </div>
+        <h1>IMDb top 250 收藏清單</h1>
+        <p class="subtitle">現在馬上開始收藏</p>
+
+        <div class="progress-wrapper">
+          <div class="progress-stats">
+            <div class="stat-item">
+              <span class="value">{{ count }}</span>
+              <span class="label">Watched</span>
+            </div>
+            <div class="stat-item">
+              <span class="value">{{ total }}</span>
+              <span class="label">Total</span>
+            </div>
+            <div class="stat-item highlight">
+              <span class="value">{{ progress }}%</span>
+              <span class="label">Completed</span>
+            </div>
+          </div>
+
+          <div class="progress-bar-container">
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" style="width: {{ progress }}%;">
+                <div class="shimmer"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main class="favorites-grid">
+      {% if movies|length == 0 %}
+      <div class="empty-state">
+        <i class="fa-regular fa-folder-open"></i>
+        <h2>現在收藏清單是空的</h2>
+        <p></p>
+        <a href="{{ url_for('index') }}" class="cta-btn"
+          >回到 home page 開始收藏</a
+        >
+      </div>
+      {% endif %} {% for movie in movies %}
+      <div
+        class="movie-card"
+        data-title="{{ movie.title }}"
+        data-year="{{ movie.year }}"
+        data-rating="{{ movie.rating }}"
+        data-desc="{{ movie.details.description if movie.details else 'No description' }}"
+        data-director="{{ movie.details.director if movie.details else 'Unknown' }}"
+        data-stars="{{ movie.details.stars if movie.details else 'Unknown' }}"
+        data-genres="{{ movie.details.genres if movie.details else 'Unknown' }}"
+        data-poster="{{ movie.poster_url }}"
+      >
+        <div class="fav-icon">
+          <a
+            href="{{ url_for('remove_favorite', movie_id=movie.id) }}"
+            title="Remove from favorites"
+          >
+            <i class="fa-solid fa-trash" style="color: #ff4d4d"></i>
+          </a>
+        </div>
+
+        <div class="img-container">
+          <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" />
+        </div>
+        <div class="content">
+          <div class="name">
+            <div class="score">
+              <h3>{{ movie.title }}</h3>
+              <ul>
+                <li style="color: rgb(245, 197, 24)">{{ movie.rating }}</li>
+                <li>/10</li>
+              </ul>
+            </div>
+          </div>
+          <div class="details">
+            <div class="date">
+              <div class="gray-color">Year</div>
+              <div>{{ movie.year }}</div>
+            </div>
+            <div class="lang">
+              <div class="gray-color">Rank</div>
+              <div>#{{ movie.rank_num }}</div>
+            </div>
+          </div>
+          <div id="bnt">
+            {% if movie.trailer_url %}
+            <a
+              href="{{ movie.trailer_url }}"
+              target="_blank"
+              class="trailer-link"
+            >
+              <button class="bnt">
+                <span class="circle"></span>
+                <i class="fa-solid fa-play"></i>
+                <p>watch trailer</p>
+              </button>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </main>
+
+    <div id="movie-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-body">
+          <div class="modal-img">
+            <img id="m-poster" src="" alt="" />
+          </div>
+          <div class="modal-info">
+            <h2 id="m-title">Title</h2>
+            <div class="m-meta">
+              <span id="m-year"></span> | <span id="m-genres"></span> |
+              <i class="fa-solid fa-star" style="color: gold"></i>
+              <span id="m-rating"></span>
+            </div>
+            <hr />
+            <p class="m-desc-label">Director</p>
+            <p id="m-director" class="m-text"></p>
+            <p class="m-desc-label">Stars</p>
+            <p id="m-stars" class="m-text"></p>
+            <p class="m-desc-label">Plot</p>
+            <p id="m-desc" class="m-desc-text"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
