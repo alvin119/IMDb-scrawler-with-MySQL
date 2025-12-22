@@ -10,7 +10,11 @@ IMDb (Internet Movie Database) 是個知名的電影網站，專門提供權威�
 ## 2、3. 功能說明與成品功能描述
 本專案在開發一個**整合爬蟲技術、Flask、mySQL**的電影資訊平台。
 
-先透過爬蟲程式(beautifulsoup為主)爬取 IMDb Top 250 網站，將資料轉化存放到資料庫，最後透過前端呈現。
+先透過爬蟲程式(beautifulsoup為主)爬取 [IMDb Top 250](https://www.imdb.com/chart/top/) 網站以及每個電影的詳細頁面，將資料轉化存放到資料庫，最後透過前端呈現。
+![image](https://hackmd.io/_uploads/rJKjp987Zg.png)
+IMDb Top 250 :arrow_up: 
+![image](https://hackmd.io/_uploads/Sk1eCqImWg.png)
+電影的詳細頁面 :arrow_up: 
 
 爬蟲程式:
 1. `scraper.py` :
@@ -103,7 +107,9 @@ imdb-project/
 
 礙於時間不足，有些功能尚未成功做完，希望將來能修改實現，並搭配 docker 進一步部屬到網頁上。
 ## 6. 執行方式
-到 `app.py` 所在目錄並執行 `python app.py`
+1. 此程式是存在本地的 MySQL 資料庫，執行成要先啟動 MySQL，可能有需要使用 `db.sql` 先建立一個名稱為 `imdb_movies` 的 schema
+2. 執行 `pip install -r requirements.txt`，安裝相關 packages
+3. 到 `app.py` 所在目錄並執行 `python app.py`，第一次因為資料庫是空的所以會呼叫 `scraper_250.py` 開始爬蟲
 ## 7. 相關連結
 - GitHub : https://github.com/alvin119/IMDb-scrawler-with-MySQL
 - Hackmd(此頁面) : https://hackmd.io/@M0Dqhe_USy-OrY2pBhL65g/Hy5ua1QXZg
